@@ -1,27 +1,46 @@
 'use strict';
 
-var ws = new WebSocket('ws://localhost:3000');
+var ws = new WebSocket('ws://localhost:8080');
 
 $(function () {
-  $('form').submit(function(){
-    var $this = $(this);
-    // ws.onopen = function() {
-    //   console.log('sent message: %s', $('#m').val());
-    // };
-    ws.send($('#m').val());
-    $('#m').val('');
-    return false;
-  });
-  ws.onmessage = function(msg){
-    var resp = JSON.parse(msg.data);
-    $('#messages')
-      .append($('<li>')
-      .append($('<span class="message">').text(resp.text)));
-  };
-  ws.onerror = function(err){
-    console.log("err", err);
-  };
-  ws.onclose = function close() {
-    console.log('disconnected');
-  };
+    $('form').submit(function() {
+        var comment = $('#m').val();
+        var reply = getReply(comment);
+
+        var obj = {
+            success: true,
+            text: comment,
+            type: reply
+        };
+
+        ws.send(JSON.stringify(obj));
+
+        $('#m').val('');
+        return false;
+    });
+
+    ws.onmessage = function(resp){
+        console.log("msg:", resp);
+        var msg = JSON.parse(resp.data);
+        $('#messages').append($('<li>').append($('<span class="message">').text(msg.text)));
+    };
+
+    ws.onerror = function(err){
+        console.log("err", err);
+    };
+
+    ws.onclose = function close() {
+        console.log('disconnected');
+    };
 });
+
+function getReply(comment) {
+    var reply;
+    for(var i = 0; i < 4; ++i) {
+        reply += comment[i];
+    }
+    if(/bot/.test(reply)){
+        return "bot";
+    }
+    return "message";
+};
