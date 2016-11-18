@@ -1,6 +1,6 @@
 'use strict';
 
-var ws = new WebSocket('ws://localhost:3000');
+var ws = new WebSocket('ws://testdocker-a6m1448l.cloudapp.net:3000');
 
 $(function () {
     $('form').submit(function() {
