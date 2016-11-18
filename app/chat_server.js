@@ -30,15 +30,17 @@ wss.on('connection', function (ws) {
             text: comment,
             type: reply
         };
-
         console.log("json", obj);
+
+        broadcast(JSON.stringify(obj));
+
         // bot反応判定
         if(reply === "bot") {
             reactPing(comment);
         }
-        else {
-            broadcast(JSON.stringify(obj));
-        }
+        // else {
+        //     broadcast(JSON.stringify(obj));
+        // }
 
     });
 });
