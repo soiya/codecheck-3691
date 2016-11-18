@@ -5,9 +5,8 @@ var ws = new WebSocket('ws://testdocker-a6m1448l.cloudapp.net:3000');
 
 $(function () {
     $('form').submit(function() {
-        var comment = $('#m').val();
-
-        ws.send(comment);
+        var comment = { text:$('#m').val() };
+        ws.send(JSON.stringify(comment));
         $('#m').val('');
         return false;
     });

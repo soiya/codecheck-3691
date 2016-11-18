@@ -24,11 +24,12 @@ wss.on('connection', function (ws) {
     //メッセージ送信時
     ws.on('message', function (message, flags) {
         console.log("flag", flags);
-
-        var reply = getReply(message);
+        console.log("message", message);
+        var comment = JSON.parse(message);
+        var reply = getReply(comment.text);
         var obj = {
             success: flags.masked,
-            text: message,
+            text: comment.text,
             type: reply
         };
 
