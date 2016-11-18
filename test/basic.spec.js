@@ -13,8 +13,7 @@ describe("broadcast", () => {
     let ua = new ws(HOST_URL);
     let ub = new ws(HOST_URL);
     let closed = [];
-    let close = (client) => {
-      console.log("complete called")
+    const close = (client) => {
       client.close();
       closed.push(client);
       if (closed.length >= 2) {
