@@ -34,5 +34,4 @@ function broadcast(message) {
         con.send(message);
     });
 };
-
-server.listen(8080);
+server.listen(process.env.PORT || 3000);
