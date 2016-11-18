@@ -1,6 +1,6 @@
 'use strict';
 
-var ws = new WebSocket('ws://codecheck-3691.azurewebsites.net/app/');
+var ws = new WebSocket('ws://codecheck-3691.azurewebsites.net/app:3000');
 
 $(function () {
     $('form').submit(function() {
