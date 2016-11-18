@@ -28,7 +28,7 @@ wss.on('connection', function (ws) {
         var obj = {
             success: flags.masked,
             text: comment,
-            type: reply
+            type: "message"
         };
         console.log("json", obj);
 
@@ -38,9 +38,6 @@ wss.on('connection', function (ws) {
         if(reply === "bot") {
             reactPing(comment);
         }
-        // else {
-        //     broadcast(JSON.stringify(obj));
-        // }
 
     });
 });
