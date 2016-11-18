@@ -24,7 +24,18 @@ wss.on('connection', function (ws) {
     //メッセージ送信時
     ws.on('message', function (message, flags) {
         console.log("flag", flags);
-        broadcast(message);
+
+        var reply = getReply(message);
+        var obj = {
+            success: flags.masked,
+            text: message,
+            type: reply
+        };
+
+        console.log("json", obj);
+
+        broadcast(JSON.stringify(obj));
+
     });
 });
 
@@ -33,6 +44,18 @@ function broadcast(message) {
     connections.forEach(function (con, i) {
         con.send(message);
     });
+};
+
+// bot通知判定
+function getReply(comment) {
+    var reply;
+    for(var i = 0; i < 4; ++i) {
+        reply += comment[i];
+    }
+    if(/bot/.test(reply)){
+        return "bot";
+    }
+    return "message";
 };
 
 server.listen(3000);

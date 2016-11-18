@@ -1,20 +1,13 @@
 'use strict';
 
 var ws = new WebSocket('ws://testdocker-a6m1448l.cloudapp.net:3000');
+// var ws = new WebSocket('ws://localhost:3000');
 
 $(function () {
     $('form').submit(function() {
         var comment = $('#m').val();
-        var reply = getReply(comment);
 
-        var obj = {
-            success: true,
-            text: comment,
-            type: reply
-        };
-
-        ws.send(JSON.stringify(obj));
-
+        ws.send(comment);
         $('#m').val('');
         return false;
     });
@@ -34,13 +27,3 @@ $(function () {
     };
 });
 
-function getReply(comment) {
-    var reply;
-    for(var i = 0; i < 4; ++i) {
-        reply += comment[i];
-    }
-    if(/bot/.test(reply)){
-        return "bot";
-    }
-    return "message";
-};
