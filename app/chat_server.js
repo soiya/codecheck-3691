@@ -23,31 +23,31 @@ wss.on('connection', function (ws) {
     });
     //メッセージ送信時
     ws.on('message', function (message, flags) {
-        console.log("flag", flags);
-        console.log("message", message);
-        var comment = JSON.parse(message);
-        var reply = getReply(comment.text);
+        var comment = JSON.parse(message).text;
+        var reply = getReply(comment);
         var obj = {
             success: flags.masked,
-            text: comment.text,
+            text: comment,
             type: reply
         };
 
         console.log("json", obj);
-
         broadcast(JSON.stringify(obj));
+
+        // bot反応判定
+        if(reply === "bot") {
+            reactPing(comment);
+        }
 
     });
 });
 
-//ブロードキャストを行う
 function broadcast(message) {
     connections.forEach(function (con, i) {
         con.send(message);
     });
-};
+}
 
-// bot通知判定
 function getReply(comment) {
     var reply;
     for(var i = 0; i < 4; ++i) {
@@ -57,6 +57,21 @@ function getReply(comment) {
         return "bot";
     }
     return "message";
-};
+}
+
+function reactPing(comment) {
+    if(/ping/.test(comment)) {
+        sentBot("pong");
+    }
+}
+
+function sentBot(comment) {
+    var obj = {
+        success: true,
+        text: comment,
+        type: "bot"
+    };
+    broadcast(JSON.stringify(obj))
+}
 
 server.listen(3000);
