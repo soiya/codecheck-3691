@@ -1,19 +1,15 @@
 ## デプロイ情報
 #### サービスURL
-{http://example.com}
+http://testdocker-a6m1448l.cloudapp.net:3000/
 
 #### リポジトリURL
-{https://github.com/uuuuu/rrrrr}
-
+https://github.com/soiya/codecheck-3691
 #### 使用言語
-- {node / python / ruby / Go / etc.}
-
+node
 #### 主なライブラリ
-- {ws / websockets / em-websocket / websocket / etc.}
-
+ws
 ####  ホスティングサービス
-- {AWS / DigitalOcean / Sakura / Heroku / etc.}
-
+Azure
 ## 独自コマンドの実装
 #### 追加したコマンド
 ```
